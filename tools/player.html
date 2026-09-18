@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPTV 精选频道本地播放测试器</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif; background: #0f172a; color: #f8fafc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+    header { background: #1e293b; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; }
+    header h1 { font-size: 18px; font-weight: 600; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
+    .status-badge { font-size: 12px; background: #0284c7; padding: 4px 10px; border-radius: 9999px; color: white; }
+    .container { display: flex; flex: 1; height: calc(100vh - 53px); }
+    .sidebar { width: 320px; background: #1e293b; border-right: 1px solid #334155; overflow-y: auto; padding: 12px; }
+    .group-title { font-size: 13px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin: 16px 8px 8px 8px; }
+    .group-title:first-child { margin-top: 4px; }
+    .channel-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; margin-bottom: 6px; background: #0f172a; border-radius: 8px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
+    .channel-item:hover { background: #334155; border-color: #38bdf8; }
+    .channel-item.active { background: #0284c7; color: #ffffff; border-color: #38bdf8; font-weight: 600; }
+    .channel-name { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .channel-tag { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: rgba(255, 255, 255, 0.15); }
+    .main-view { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #020617; padding: 20px; position: relative; }
+    .video-wrapper { width: 100%; max-width: 960px; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); position: relative; }
+    video { width: 100%; height: 100%; display: block; }
+    .info-panel { margin-top: 16px; width: 100%; max-width: 960px; background: #1e293b; padding: 12px 18px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .current-url { font-size: 12px; color: #94a3b8; word-break: break-all; max-width: 70%; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📺 IPTV 专属精选流播放测试器</h1>
+    <span class="status-badge">本地即开即测</span>
+  </header>
+  <div class="container">
+    <div class="sidebar" id="channelList">
+      <!-- 频道列表由 JS 自动渲染 -->
+    </div>
+    <div class="main-view">
+      <div class="video-wrapper">
+        <video id="videoPlayer" controls autoplay></video>
+      </div>
+      <div class="info-panel">
+        <div>
+          <strong id="currentTitle" style="color: #38bdf8; font-size: 15px;">请在左侧选择频道</strong>
+        </div>
+        <div class="current-url" id="currentStreamUrl">-</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const channels = [
+      { group: "香港专区", name: "翡翠台 1080P (myTV)", tag: "1080P", url: "http://103.172.187.30:12000/stream/mytv/null-1/master.m3u8" },
+      { group: "香港专区", name: "翡翠台 4K 超清", tag: "4K", url: "http://r.jdshipin.com/n90gt" },
+      { group: "香港专区", name: "翡翠台 高速备用1", tag: "线路1", url: "http://r.jdshipin.com/qClQf" },
+      { group: "香港专区", name: "翡翠台 高速备用2", tag: "线路2", url: "http://r.jdshipin.com/qrfbg" },
+      { group: "香港专区", name: "无线新闻台 (TVB)", tag: "新闻", url: "http://r.jdshipin.com/CkuBd" },
+      { group: "香港专区", name: "TVB Plus 综合台", tag: "综合", url: "http://r.jdshipin.com/Nr5jq" },
+      { group: "香港专区", name: "TVB 星河 (经典港剧)", tag: "剧集", url: "http://r.jdshipin.com/sXuuD" },
+
+      { group: "体育精选", name: "CCTV5 体育 (官方流)", tag: "央视", url: "http://112.30.73.119:9901/tsfile/live/0005_2.m3u8?key=txiptv&playlive=0&authid=0" },
+      { group: "体育精选", name: "CCTV5 体育 (专线)", tag: "央视", url: "https://live.264788.xyz/channel/cctv5?livekey=01WgOR41rriMmMkzNsd0UoaxJRwetZdxIvtVk" },
+      { group: "体育精选", name: "CCTV5+ 赛事", tag: "央视", url: "http://112.30.73.119:9901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0" },
+      { group: "体育精选", name: "广东体育", tag: "高清", url: "http://r.jdshipin.com/LiYdg" },
+      { group: "体育精选", name: "纬来体育台", tag: "台湾", url: "https://epg.pw/stream/8855a9936e37e608a0ec8a014cce1673dee9c5d68d560da376cc92e5edef2b25.m3u8" },
+
+      { group: "台湾专区", name: "TVBS 新闻台", tag: "中华电信", url: "http://61.221.215.25:8800/hls/9/index.m3u8" },
+      { group: "台湾专区", name: "TVBS Asia", tag: "海外", url: "http://38.64.72.148/hls/modn/list/4005/playlist.m3u8" },
+      { group: "台湾专区", name: "台视新闻", tag: "新闻", url: "http://38.64.72.148/hls/modn/list/4013/chunklist1.m3u8" },
+      { group: "台湾专区", name: "三立戏剧台", tag: "戏剧", url: "http://61.221.215.25:8800/hls/41/index.m3u8" },
+      { group: "台湾专区", name: "八大戏剧台", tag: "戏剧", url: "http://61.221.215.25:8800/hls/39/index.m3u8" },
+      { group: "台湾专区", name: "纬来精采台", tag: "综合", url: "http://61.221.215.25:8800/hls/48/index.m3u8" },
+      { group: "台湾专区", name: "人间卫视", tag: "文化", url: "https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/chunklist_w511254805.m3u8" }
+    ];
+
+    const listEl = document.getElementById("channelList");
+    const video = document.getElementById("videoPlayer");
+    const titleEl = document.getElementById("currentTitle");
+    const urlEl = document.getElementById("currentStreamUrl");
+    let hls = null;
+
+    let currentGroup = "";
+    channels.forEach((ch, idx) => {
+      if (ch.group !== currentGroup) {
+        currentGroup = ch.group;
+        const gTitle = document.createElement("div");
+        gTitle.className = "group-title";
+        gTitle.textContent = currentGroup;
+        listEl.appendChild(gTitle);
+      }
+
+      const item = document.createElement("div");
+      item.className = "channel-item";
+      item.innerHTML = `
+        <span class="channel-name">${ch.name}</span>
+        <span class="channel-tag">${ch.tag}</span>
+      `;
+      item.onclick = () => playChannel(ch, item);
+      listEl.appendChild(item);
+
+      if (idx === 0) {
+        playChannel(ch, item);
+      }
+    });
+
+    function playChannel(ch, element) {
+      document.querySelectorAll(".channel-item").forEach(el => el.classList.remove("active"));
+      if (element) element.classList.add("active");
+
+      titleEl.textContent = `正在播放: ${ch.name} (${ch.group})`;
+      urlEl.textContent = ch.url;
+
+      if (Hls.isSupported()) {
+        if (hls) hls.destroy();
+        hls = new Hls({ enableWorker: true });
+        hls.loadSource(ch.url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = ch.url;
+        video.addEventListener('loadedmetadata', () => video.play());
+      }
+    }
+  </script>
+</body>
+</html>
