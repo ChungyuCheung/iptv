@@ -8,6 +8,8 @@ http://112.30.73.119:9901/tsfile/live/0006_2.m3u8?key=txiptv&playlive=0&authid=0
 #EXTINF:-1 tvg-name="CCTV5+" tvg-id="CCTV5+" tvg-logo="https://tb.zbds.top/logo/CCTV5+.png" group-title="体育精选", CCTV5+
 https://live.264788.xyz/channel/cctv5plus?livekey=01WgOR41rriMmMkzNsd0UoaxJRwetZdxIvtVk
 #EXTINF:-1 tvg-name="广东体育" tvg-id="广东体育" tvg-logo="https://tb.zbds.top/logo/广东体育.png" group-title="体育精选", 广东体育
+https://epg.pw/stream/7b470f9fc5c305db0c8622117b7b25ca00eb35ba3e93e865cf0ff9df5c736681.m3u8
+#EXTINF:-1 tvg-name="广东体育" tvg-id="广东体育" tvg-logo="https://tb.zbds.top/logo/广东体育.png" group-title="体育精选", 广东体育
 http://r.jdshipin.com/LiYdg
 #EXTINF:-1 tvg-name="纬来体育" tvg-id="纬来体育" tvg-logo="https://tb.zbds.top/logo/纬来体育.png" group-title="体育精选", 纬来体育
 https://epg.pw/stream/8855a9936e37e608a0ec8a014cce1673dee9c5d68d560da376cc92e5edef2b25.m3u8
@@ -16,19 +18,19 @@ http://103.172.187.30:12000/stream/mytv/null-1/master.m3u8
 #EXTINF:-1 tvg-name="翡翠台 4K" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台 4K
 http://r.jdshipin.com/n90gt
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台
-http://php.jdshipin.com:8880/TVOD/iptv.php?id=fct3
-#EXTINF:-1 tvg-name="翡翠台" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台
-http://r.jdshipin.com/qClQf
+http://r.jdshipin.com/62WM7
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台
 http://r.jdshipin.com/qrfbg
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台
-http://r.jdshipin.com/62WM7
-#EXTINF:-1 tvg-name="翡翠台" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台
-http://r.jdshipin.com/thuYX
+http://php.jdshipin.com:8880/TVOD/iptv.php?id=fct4
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台
 http://r.jdshipin.com/GeWKr
 #EXTINF:-1 tvg-name="翡翠台" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台
-http://php.jdshipin.com:8880/TVOD/iptv.php?id=fct4
+http://php.jdshipin.com:8880/TVOD/iptv.php?id=fct3
+#EXTINF:-1 tvg-name="翡翠台" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台
+http://r.jdshipin.com/thuYX
+#EXTINF:-1 tvg-name="翡翠台" tvg-id="翡翠台" tvg-logo="https://tb.zbds.top/logo/翡翠台.png" group-title="香港专区", 翡翠台
+http://r.jdshipin.com/qClQf
 #EXTINF:-1 tvg-name="无线新闻台" tvg-id="无线新闻台" tvg-logo="https://tb.zbds.top/logo/无线新闻台.png" group-title="香港专区", 无线新闻台
 http://r.jdshipin.com/CkuBd
 #EXTINF:-1 tvg-name="无线新闻台" tvg-id="无线新闻台" tvg-logo="https://tb.zbds.top/logo/无线新闻台.png" group-title="香港专区", 无线新闻台
@@ -38,9 +40,9 @@ http://r.jdshipin.com/Nr5jq
 #EXTINF:-1 tvg-name="TVB Plus" tvg-id="TVB Plus" tvg-logo="https://tb.zbds.top/logo/TVB Plus.png" group-title="香港专区", TVB Plus
 http://r.jdshipin.com/ndGgS
 #EXTINF:-1 tvg-name="TVB 星河" tvg-id="TVB星河" tvg-logo="https://tb.zbds.top/logo/TVB星河.png" group-title="香港专区", TVB 星河
-http://php.jdshipin.com/TVOD/iptv.php?id=xinghe
-#EXTINF:-1 tvg-name="TVB 星河" tvg-id="TVB星河" tvg-logo="https://tb.zbds.top/logo/TVB星河.png" group-title="香港专区", TVB 星河
 http://r.jdshipin.com/sXuuD
+#EXTINF:-1 tvg-name="TVB 星河" tvg-id="TVB星河" tvg-logo="https://tb.zbds.top/logo/TVB星河.png" group-title="香港专区", TVB 星河
+http://php.jdshipin.com/TVOD/iptv.php?id=xinghe
 #EXTINF:-1 tvg-name="TVB 星河" tvg-id="TVB星河" tvg-logo="https://tb.zbds.top/logo/TVB星河.png" group-title="香港专区", TVB 星河
 http://r.jdshipin.com/Voac4
 #EXTINF:-1 tvg-name="TVBS 新闻台" tvg-id="TVBS" tvg-logo="https://tb.zbds.top/logo/TVBS.png" group-title="台湾专区", TVBS 新闻台
